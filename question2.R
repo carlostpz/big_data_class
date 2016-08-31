@@ -65,7 +65,7 @@ for (iter in 1:n_iter){
   hessian = t(X) %*% diag( as.vector( w * (1-w) ) ) %*% X
   beta = beta - solve( hessian ) %*% gradient
   beta_mat[iter, ] = beta
-  gradient_len[iter] = sum( gradient^2 )
+  gradient_len[iter] = sqrt( sum( gradient^2 ) )
 }
 
 plot(gradient_len, type = "l")
