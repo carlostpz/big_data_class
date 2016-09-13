@@ -137,3 +137,48 @@ fit1$fitted_beta
 fit2$fitted_beta
 fit3$fitted_beta
 fit4$fitted_beta
+
+
+######################################
+#   Applying sgd to the real data
+######################################
+
+data = read.table("/home/tadeu/ut_austin/Courses/big_data/exercises/data_ex1.txt", sep=",", as.is=TRUE, header=FALSE)
+y = data[,2]
+y[ which( y == "M" ) ] = 1
+y[ which( y == "B" ) ] = 0
+y = as.numeric(y)
+
+X = as.matrix( data[, 3:12] )
+
+for (column in 1:ncol(X)){
+  X[, column] = ( X[, column] - mean( X[, column] ) ) / sd ( X[, column] )
+}
+
+
+n = nrow(X)
+X = cbind( rep(1, n), X)
+
+p = ncol(X)
+
+# applying the function
+fit = sgd_logistic(n_iter=10000, y=y, X=X, last_iter=1000, init_step=0.01, delay=2, learning_rate=0.8)
+
+# Beta values per iteration
+plot( fit$all_betas[,1], type="l")
+plot( fit$all_betas[,2], type="l")
+plot( fit$all_betas[,3], type="l")
+plot( fit$all_betas[,4], type="l")
+
+# length of the gradient goes to zero?  Answer: NO
+# plot( fit$gradient_length, type = "l" )
+
+# last value obtained for beta
+fit$all_betas[n_iter, ]
+
+# answer obteined after averaging the last 1000 values of beta
+fit$fitted_beta
+
+# comparing with results from the glm function
+glm ( y ~ X - 1 , family = "binomial")$coef
+
