@@ -1,7 +1,3 @@
-// [[Rcpp::depends(RcppParallel)]]
-#include <RcppParallel.h>
-using namespace RcppParallel;
-
 // [[Rcpp::depends(RcppArmadillo)]]
 #include <RcppArmadillo.h>
 using namespace arma;
