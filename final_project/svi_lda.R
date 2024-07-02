@@ -31,7 +31,7 @@ D = max( original_data[,1])
 N = max( original_data[,2]) 
 
 # initializing gamma
-gamma_init = matrix(1 + rnorm( n = n_topics * D, mean = 0, sd = sqrt(.1) ) , nrow = D, ncol = n_topics )
+gamma_init = abs( matrix(1 + rnorm( n = n_topics * D, mean = 0, sd = sqrt(.1) ) , nrow = D, ncol = n_topics ) )
 
 # defining alpha (hyper parameter)
 alpha = matrix( 1/n_topics , nrow = D, ncol = n_topics )
